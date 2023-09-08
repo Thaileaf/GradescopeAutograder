@@ -2,4 +2,4 @@
 
 #  execute the test -- you would most likely execute on submitted file
 #  for example: cppcheck ../student_file.h <options>
-cppcheck test.cpp -x c++ --enable=all --error-exitcode=1 --verbose --suppress=missingIncludeSystem
+cppcheck ../*.cpp -x c++ --enable=all --error-exitcode=1 --verbose --suppress=missingIncludeSystem

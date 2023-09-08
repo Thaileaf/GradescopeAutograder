@@ -2,15 +2,16 @@
 
 import sys
 import lizard
-
+import os
 
 def test(func):
     fn_name = func.long_name
+    error_found = False
 
     #  more than 100 lines of code?
     if func.nloc > 100:
         print('Function \'{}\' exceeds 100 lines of code'.format(fn_name))
-        exit(1)
+        error_found = True
 
     ccn = func.cyclomatic_complexity
     #  cyclomatic complexity exceeds 4? (value of 4 used as example)
@@ -18,20 +19,26 @@ def test(func):
         print('Function \'{}\' is too complex.'.format(fn_name))
         print('Observed complexity: {}'.format(ccn))
         print('Must not exceed: {}'.format(4))
-        exit(1)
+        error_found = True
 
-    exit(0)
-
+    return error_found
 
 if __name__ == "__main__":
 
-    filename = 'file.cpp'
-    function = 'fn'
+    directory_path = '/autograder/tests'
+    cpp_files = [os.path.join(directory_path, f) for f in os.listdir(directory_path) if f.endswith('.cpp')]
 
-    info = lizard.analyze_file(filename)
+    has_errors = False
 
-    for fn in info.function_list:
-        if function == fn.name or function == fn.long_name:
-            test(fn)
+    for filename in cpp_files:
+        print(filename, "functions")
+        info = lizard.analyze_file(filename)
 
-    exit(1)  # if the function is not found, and test() is not called, test will fail
+        for fn in info.function_list:
+            print(fn.name, " has ", fn.nloc, " lines")
+            if test(fn):
+                has_errors = True
+
+        print()
+
+   

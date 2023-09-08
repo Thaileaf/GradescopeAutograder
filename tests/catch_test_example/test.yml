@@ -1,4 +1,0 @@
-weight: 10.0
-name: 'Example Catch test'
-message: 'Your program does not satisfy a condition!'
-show_output: false
