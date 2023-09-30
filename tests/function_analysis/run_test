@@ -25,14 +25,13 @@ def test(func):
 
 if __name__ == "__main__":
 
-    directory_path = '/autograder/tests'
-    cpp_files = [os.path.join(directory_path, f) for f in os.listdir(directory_path) if f.endswith('.cpp')]
-
+    directory_path = '/autograder/submission'
+    cpp_files = [f for f in os.listdir(directory_path) if f.endswith('.cpp')]
     has_errors = False
 
     for filename in cpp_files:
         print(filename, "functions")
-        info = lizard.analyze_file(filename)
+        info = lizard.analyze_file(directory_path + "/" + filename)
 
         for fn in info.function_list:
             print(fn.name, " has ", fn.nloc, " lines")
@@ -40,5 +39,7 @@ if __name__ == "__main__":
                 has_errors = True
 
         print()
+
+    exit(1)
 
    

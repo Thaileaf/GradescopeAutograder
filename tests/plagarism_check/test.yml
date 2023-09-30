@@ -1,0 +1,6 @@
+weight: 10.0
+name: 'Plagarism Check Simple'
+message: ''
+show_output: true
+timeout: 10
+visibility: hidden

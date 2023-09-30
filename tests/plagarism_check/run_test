@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+import difflib
+
+def compute_similarity(file1_path, file2_path):
+    # Read the content of the first file
+    with open(file1_path, 'r') as file1:
+        content1 = file1.read()
+
+    # Read the content of the second file
+    with open(file2_path, 'r') as file2:
+        content2 = file2.read()
+
+    # Compute the similarity ratio using SequenceMatcher
+    sequence_matcher = difflib.SequenceMatcher(None, content1, content2)
+    similarity_ratio = sequence_matcher.ratio()
+
+    return similarity_ratio
+
+if __name__ == '__main__':
+    file1_path = '/autograder/submission/test.cpp'
+    file2_path = '/autograder/source/plagarism_file.cpp'
+    file3_path = '/autograder/source/plagarism_file2.cpp'
+    file4_path = '/autograder/source/plagarism_file3.cpp'
+
+    similarity = compute_similarity(file1_path, file2_path)
+    print(f"Similarity between the submission and plagarism 1: {similarity:.2%}")
+
+    similarity = compute_similarity(file1_path, file3_path)
+    print(f"Similarity between the submission and plagarism 2: {similarity:.2%}")
+    
+    similarity = compute_similarity(file1_path, file4_path)
+    print(f"Similarity between the submission and plagarism 3: {similarity:.2%}")
+    exit(1)
+

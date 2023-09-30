@@ -1,0 +1,5 @@
+weight: 0.0
+name: 'Compiling'
+message: 'Does not compile!'
+show_output: true
+timeout: 30

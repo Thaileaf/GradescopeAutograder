@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#  compile test:
+#  -I ../      : indicates that there are files in the parent directory that we '#include' in our test (these are the
+#                files that were submitted by the student).
+#  -o test.exe : name the compiled executable 'test.exe'
+g++ -std=c++11 /autograder/submission/*.cpp -I ../ -o text.exe
+
+#  execute the test
+if [[ -f "./test.exe" ]]; then
+    ./test.exe
+else
+    echo "Resubmit your code and try again."
+fi
