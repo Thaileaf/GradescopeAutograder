@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Prepare autograder environment
+apt-get update
 
 # Install Python dependencies declared in requirements.txt
 apt-get install -y python3.10 python3-pip

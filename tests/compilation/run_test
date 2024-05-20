@@ -7,5 +7,5 @@ g++ -std=c++20 -Wall ../hw01.cpp -o hw01.exe
 if [[ -f "./hw01.exe" ]]; then
     ./hw01.exe
 else
-    echo "Resubmit your code and try again."
+    echo "Doesn't compile" ; exit 1
 fi
