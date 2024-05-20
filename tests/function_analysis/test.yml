@@ -1,6 +1,0 @@
-weight: 10.0
-name: 'Function Analysis'
-message: ''
-show_output: true
-timeout: 10
-visibility: hidden

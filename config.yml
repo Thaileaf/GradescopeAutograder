@@ -1,3 +1,3 @@
 limit_submissions: -1 
 required_files:
-  - test.cpp
+  - hw01.cpp

@@ -2,4 +2,5 @@ click
 PyYAML
 gradescope-utils>=0.2.6
 lizard
-difflab
+unittest
+subprocess

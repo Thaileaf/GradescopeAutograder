@@ -117,7 +117,6 @@ def run_tests(pending_messages):
     with open(gu.Config.RESULTS_FILE, 'w+') as result_stream:
         JSONTestRunner(stdout_visibility='hidden', stream=result_stream).run(suite)
 
-        LOGGER.info('Adding final score to leaderboard')
         result_stream.seek(0)  # reset file pointer
         data = json.load(result_stream)  # load contents to JSON
         final_score = data.get('score', 0.0)
@@ -144,7 +143,7 @@ if __name__ == '__main__':
 
     limit = config.get('limit_submissions', -1)
     LOGGER.info('Using submission limit: {}'.format(limit))
-    if limit is not -1:
+    if limit != -1:
         num_submissions = gu.number_submissions() + 1
         if num_submissions > limit:
             LOGGER.info('Submission limit reached. Observed submissions: {}'.format(num_submissions))

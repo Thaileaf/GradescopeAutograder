@@ -3,7 +3,7 @@
 # Prepare autograder environment
 
 # Install Python dependencies declared in requirements.txt
-apt-get install -y python python3-pip
+apt-get install -y python3.10 python3-pip
 pip3 install -r /autograder/source/requirements.txt
 
 # Install valgrind memory tool

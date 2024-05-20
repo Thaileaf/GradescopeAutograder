@@ -1,5 +1,0 @@
-weight: 10.0
-name: 'CppCheck Static Analysis'
-message: ''
-show_output: true
-visibility: hidden
