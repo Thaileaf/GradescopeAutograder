@@ -1,3 +1,7 @@
+"""
+This file defined a bunch of utility functions which are used in 
+run_autograder.py
+"""
 import os
 import shutil
 import json

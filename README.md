@@ -1,11 +1,5 @@
 # CS-UY 2124 Homework 1 Gradescope Autograder
 
-# Gradescope Autograder for C++
-
-Download v1.1: [autograder.zip](https://github.com/UgiR/gradescope-autograde-cpp/releases/download/v1.1/autograder.zip)
-
-To use new features in the master branch, clone or download this repository.
-
 ### Configuration
 
 In `config.yml`, define all files that must be submitted by the student.

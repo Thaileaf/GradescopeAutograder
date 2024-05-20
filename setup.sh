@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# This file runs to setup the environemnt for our Docker when the zip file 
+# is uploaded to Gradescoape
+
 # Prepare autograder environment
 apt-get update
 

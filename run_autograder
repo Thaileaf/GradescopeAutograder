@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+
+"""
+Gradescope is going to run this file when the student upload their file. 
+"""
+
 import grade_util as gu
 import bootstrap
 import shutil
@@ -15,16 +20,25 @@ from typing import List
 from gradescope_utils.autograder_utils.decorators import weight, visibility
 from gradescope_utils.autograder_utils.json_test_runner import JSONTestRunner
 
-logging.basicConfig()
-LOGGER = logging.getLogger('autograder')
-LOGGER.setLevel(logging.INFO)
-
+# Not useful for CS-UY 2124 ################################################
 ZERO_LEADERBOARD = [
     {
         'name': 'Score',
         'value': 0
     }
 ]
+
+def SUBMISSIONS_EXCEEDED(limit):
+    return ZERO_RESULT('Exceeded maximum number of submissions: {}'.format(limit))
+
+def NUM_SUBMISSIONS_INFO(num, limit):
+    return ZERO_RESULT('Submission {} out of {}'.format(num, limit))
+############################################################################
+
+logging.basicConfig()
+# logs by LOGGER is not visible from students
+LOGGER = logging.getLogger('autograder') 
+LOGGER.setLevel(logging.INFO)
 
 def ZERO_RESULT(msg):
     return {
@@ -38,15 +52,6 @@ def ZERO_RESULT(msg):
 def BAD_FORMAT(file):
     return ZERO_RESULT('Required file not submitted: \'{0}\'.'.format(file))
 
-
-def SUBMISSIONS_EXCEEDED(limit):
-    return ZERO_RESULT('Exceeded maximum number of submissions: {}'.format(limit))
-
-
-def NUM_SUBMISSIONS_INFO(num, limit):
-    return ZERO_RESULT('Submission {} out of {}'.format(num, limit))
-
-
 #  class used in generating unittest TestCase's
 class Test(type):
 
@@ -57,12 +62,16 @@ class Test(type):
 
 def get_test_dirs() -> List[str]:
     '''
-    Returns a list of directory paths, as strings, for each test contained in 'tests' directory
+    Returns a list of directory paths, as strings, for each test contained in
+    'tests' directory
     '''
     return [dr[:-1] for dr in glob.glob(gu.Config.TEST_DIR + '/*/')]
 
 
 def load_yaml(file: str):
+    """
+    Load test.yml in ./tests/EACH_INIDIVIDUAL_TEST
+    """
     try:
         with open(file, 'r') as f:
             return yaml.safe_load(f) or {}
@@ -71,16 +80,24 @@ def load_yaml(file: str):
 
 
 def generate_test(dir_name):
+    """
+    :param dir_name: A specific dir name in ./tests
+    :return A wrapper function that will be used in unittest
+    """
     settings = load_yaml(os.path.join(gu.Config.TEST_DIR, dir_name, 'test.yml'))
     LOGGER.info('Generating test \'{}\''.format(settings.get('name', '')))
 
     def run_test():
         run_path = os.path.join(gu.Config.TEST_DIR, dir_name, 'run_test')
         os.chmod(run_path, os.stat(run_path).st_mode | stat.S_IEXEC)
-        subprocess.check_call(['dos2unix', 'run_test'], cwd=os.path.join(gu.Config.TEST_DIR, dir_name),
-                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        subprocess.check_output(['./run_test'], cwd=os.path.join(gu.Config.TEST_DIR, dir_name),
-                                stderr=subprocess.STDOUT, timeout=settings.get('timeout', None))
+        subprocess.check_call(['dos2unix', 'run_test'],
+                               cwd=os.path.join(gu.Config.TEST_DIR, dir_name),
+                               stdout=subprocess.DEVNULL,
+                               stderr=subprocess.DEVNULL)
+        subprocess.check_output(['./run_test'],
+                                cwd=os.path.join(gu.Config.TEST_DIR, dir_name),
+                                stderr=subprocess.STDOUT, 
+                                timeout=settings.get('timeout', None))
 
     @weight(settings.get('weight', 1))
     @visibility(settings.get('visibility', 'visible'))
@@ -103,7 +120,7 @@ def generate_test(dir_name):
 def run_tests(pending_messages):
     suite = unittest.TestSuite()
 
-    #  go through all directories in /tests
+    #  go through all directories in ./tests
     for dr in get_test_dirs():
         LOGGER.info('Test directory discovered: {}'.format(dr))
         if not gu.file_exists(os.path.join(gu.Config.TEST_DIR, dr, 'run_test')):
@@ -143,6 +160,8 @@ if __name__ == '__main__':
 
     limit = config.get('limit_submissions', -1)
     LOGGER.info('Using submission limit: {}'.format(limit))
+    """
+    # Not useful for CS-UY 2124 #######################
     if limit != -1:
         num_submissions = gu.number_submissions() + 1
         if num_submissions > limit:
@@ -151,7 +170,8 @@ if __name__ == '__main__':
             exit(0)
         else:
             pending_messages.append((NUM_SUBMISSIONS_INFO(num_submissions, limit)))
-
+    ###################################################
+    """
     for file in config.get('required_files', []):
         LOGGER.info('Attempting to load file: {}'.format(file))
         #  check if required file is submitted
