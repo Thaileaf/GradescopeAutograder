@@ -25,7 +25,8 @@ Files:
 * `run_test` (required):
 
     In order for the autograder to be able to run the test, you must include a `run_test` executable file that runs
-    the test. This can be in any language, so make sure it includes a shebang line (`#!/usr/bin/env bash` for example).
+    the test. This can be in any language, so make sure it includes a shebang line (`#!/usr/bin/env bash` for example). `exit(0)` will make the code pass the test, any other number will make the
+    submitted code fail the test.
 
 * `test.yml` (optional)
 
