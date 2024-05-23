@@ -2,15 +2,18 @@
 
 #  compile test:
 #  -o hw01.exe : name the compiled executable 'hw01.exe'
+
 # -Werror is optional. It's going to make warnings error i.e. Not returning in
 # all control path for non-void function, but its not going to mark implicit 
-# conversion from size_t to int an error
+# conversion from size_t to int an error. I prefer keeping -Werror, but its a 
+# design choice. https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html is the
+# detailed documentation about g++ warning-options.
 # g++ -std=c++20 ../hw01.cpp -o hw01.exe
-g++ -std=c++20 -Werror ../hw01.cpp -o hw01.exe
+g++ -std=c++20 -Werror ../hw01.cpp -o ../hw01.exe
 
 #  execute the test
-if [[ -f "./hw01.exe" ]]; then
-    ./hw01.exe
+if [[ -f "../hw01.exe" ]]; then
+    ../hw01.exe
 else
     # exit with number other than 0 will make this test fail for students
     echo "Resubmit your code and try again." ; exit 1
