@@ -11,12 +11,13 @@ def test_generated_output():
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE)
     except FileNotFoundError as e:
-        print("hw01.exe is not found")
+        print("hw01.exe is not found") # when complication test not passed
         exit(1)
     stdout, stderr = process.communicate()
     
-    # Decode the output from bytes to string
+    # Decode the output and error from bytes to string
     generated_output = stdout.decode('utf-8')
+    generated_error = stderr.decode('utf-8')
 
     # Path to the expected output file
     expected_output_path = './output.txt'
@@ -25,6 +26,8 @@ def test_generated_output():
     with open(expected_output_path, 'r') as file:
         expected_output = file.read()
 
+    print("Generated Error:")
+    print(generated_error)
     print("Generated output:")
     print("============================")
     print(generated_output)
@@ -33,6 +36,7 @@ def test_generated_output():
     print("============================")
     print(expected_output)
     print("============================")
+
     # Assert that the generated output matches the expected output
     try:
         assert generated_output == expected_output
